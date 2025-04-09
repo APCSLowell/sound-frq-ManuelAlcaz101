@@ -11,23 +11,36 @@ public class Sound
    *  Values less than -limit are changed to -limit.
    *  @param limit the amplitude limit
    *         Precondition: limit >= 0
+      
    *  @return the number of values in this sound that this method changed
    */
-  public int limitAmplitude(int limit)
-  {  
-    /* to be implemented in part (a) */
-    return 0;
+public int limitAmplitude(int limit) {
+    int count = 0;
+    for (int i = 0; i < samples.length; i++) {
+      if (samples[i] > limit) {
+        samples[i] = limit;
+        count++;
+      } else if (samples[i] < -limit) {
+        samples[i] = -limit;
+        count++;
+      }
+    }
+    return count;
   }
 
-
-
-  /** Removes all silence from the beginning of this sound.
-   *  Silence is represented by a value of 0.
-   *  Precondition: samples contains at least one nonzero value
-   *  Postcondition: the length of samples reflects the removal of starting silence
+  /**
+   * Removes all silence from the beginning of this sound.
+   * Silence is represented by a value of 0.
+   * Precondition: samples contains at least one nonzero value
+   * Postcondition: the length of samples reflects the removal of starting silence
    */
-  public void trimSilenceFromBeginning()
-  {
-    /* to be implemented in part (b) */
+  public void trimSilenceFromBeginning() {
+    int startIndex = 0;
+    while (startIndex < samples.length && samples[startIndex] == 0) {
+      startIndex++;
+    }
+
+    // Copy the remaining elements into a new array
+    samples = Arrays.copyOfRange(samples, startIndex, samples.length);
   }
 }
